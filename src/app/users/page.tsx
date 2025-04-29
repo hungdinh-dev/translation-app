@@ -8,12 +8,8 @@ export default async function UsersPage({ }) {
     ])
 
     return (
-        <div className=''>
-            {/* Thêm component add new user */}
+        <>
             <CreateUser />
-            <div className="">
-                {/* {console.log("Testttttttttt: ", promises)} */}
-            </div>
-        </div>
+        </>
     )
 }

@@ -1,13 +1,9 @@
-import Image from "next/image";
+import Hero from "@/components/app-hero";
 
 export default function Home() {
   return (
-    <>
-      Hello
-
-      <a href="/users">
-        Open User
-      </a>
-    </>
+    <div>
+      <Hero />
+    </div>
   );
 }
