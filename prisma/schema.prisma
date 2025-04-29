@@ -25,22 +25,42 @@ generator client {
 }
 
 model User {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  email         String   @unique
-  passwordHash  String
-  twoFASecret   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  historyChats  HistoryChat[]
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  name       String?
+  email      String?
+  logins     AuthProvider[]  // Đa phương thức đăng nhập
+  sessions   ChatSession[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
 }
 
-model HistoryChat {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String   @db.ObjectId
-  user           User     @relation(fields: [userId], references: [id])
-  sourceText     String
-  translatedText String
-  sourceLang     String
-  targetLang     String
-  createdAt      DateTime @default(now())
+model AuthProvider {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  user         User     @relation(fields: [userId], references: [id])
+  provider     String   // 'credentials' | 'google'
+  providerId   String   // Với credentials là email, với google là sub
+  passwordHash String?  // Chỉ dùng khi provider = 'credentials'
+  createdAt    DateTime @default(now())
+
+  @@unique([provider, providerId])
+}
+
+model ChatSession {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String        @db.ObjectId
+  user       User          @relation(fields: [userId], references: [id])
+  title      String
+  messages   ChatMessage[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model ChatMessage {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  sessionId     String       @db.ObjectId
+  session       ChatSession  @relation(fields: [sessionId], references: [id])
+  role          String       // 'user' | 'assistant'
+  content       String
+  createdAt     DateTime     @default(now())
 }
