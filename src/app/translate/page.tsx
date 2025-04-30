@@ -12,8 +12,12 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { EllipsisVertical } from 'lucide-react'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { CreateSessionDialog } from '@/features/sessions/create-session-dialog'
+import { useSession } from 'next-auth/react'
 
 export default function TranslatePage() {
+
+    const { data: session } = useSession();
+
     const form = useForm({
         defaultValues: {
             text: '',
@@ -26,7 +30,7 @@ export default function TranslatePage() {
     const [sessionId, setSessionId] = useState<string>('')
 
     const getListSessions = async () => {
-        const sessions = await getChatSession('68111838744848fd7c819782')
+        const sessions = await getChatSession(session?.user?.id)
         console.log("List Sessions: ", sessions)
         setSessions(sessions)
     }
@@ -40,35 +44,15 @@ export default function TranslatePage() {
                 const existingMessages = await getChatMessages(storedSessionId)
                 setMessages(existingMessages)
             }
-            // else {
-            //     const session = await createSessionIfNeeded('68111838744848fd7c819782')
-            //     setSessionId(session.id)
-            //     sessionStorage.setItem('chatSessionId', session.id)
-            // }
         }
-
-        // const getListSessions = async () => {
-        //     const sessions = await getChatSession('68111838744848fd7c819782')
-        //     console.log("List Sessions: ", sessions)
-        //     setSessions(sessions)
-        // }
-
-        // sessionStorage.clear();
         initSession()
         getListSessions()
     }, [])
-
-    // useEffect(() => {
-    //     const nowSession = sessionStorage.getItem('chatSessionId')
-    //     sessionStorage.setItem('chatSessionId', nowSession)
-    // }, [sessionStorage.getItem('chatSessionId')])
-
+    
     const setNowMessage = async (sessionId: string) => {
         const existingMessages = await getChatMessages(sessionId)
         setMessages(existingMessages)
     }
-
-
 
     const onSubmit = async (data: any) => {
         const targetLang = data.targetLang
@@ -108,7 +92,7 @@ export default function TranslatePage() {
                     </div>
                     <HoverCard>
                         <HoverCardTrigger asChild>
-                            <CreateSessionDialog userId='68111838744848fd7c819782' onSessionCreated={getListSessions} />
+                            <CreateSessionDialog userId={session?.user?.id} onSessionCreated={getListSessions} />
                             {/* <Button><SquarePlus size={10} /></Button> */}
                         </HoverCardTrigger>
                         <HoverCardContent className="w-fit">
@@ -119,7 +103,7 @@ export default function TranslatePage() {
                     </HoverCard>
                 </div>
                 <div className="flex flex-col gap-y-2 mt-2">
-                    {sessions.map((session, index) => {
+                    {(sessions || []).map((session, index) => {
                         return (
                             <Button key={index} onClick={() => setNowMessage(session.id)} className=''>
                                 {session.title}

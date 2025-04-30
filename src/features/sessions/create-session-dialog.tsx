@@ -31,7 +31,7 @@ export function CreateSessionDialog({ userId, onSessionCreated }: { userId: stri
         console.log("Create Session Data?: ", data)
 
         const session = await createSession({
-            userId: '68111838744848fd7c819782',
+            userId: userId,
             title: data.title
         })
 
