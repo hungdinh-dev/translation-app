@@ -28,7 +28,7 @@ model User {
   id         String          @id @default(auto()) @map("_id") @db.ObjectId
   name       String?
   email      String?
-  logins     AuthProvider[]  // Đa phương thức đăng nhập
+  logins     AuthProvider[]
   sessions   ChatSession[]
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @updatedAt
@@ -57,10 +57,17 @@ model ChatSession {
 }
 
 model ChatMessage {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  sessionId     String       @db.ObjectId
-  session       ChatSession  @relation(fields: [sessionId], references: [id])
-  role          String       // 'user' | 'assistant'
-  content       String
-  createdAt     DateTime     @default(now())
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  sessionId    String        @db.ObjectId
+  session      ChatSession   @relation(fields: [sessionId], references: [id])
+  role         Role          // 'user' | 'ai'
+  content      String
+  sourceLang   String?
+  targetLang   String?
+  createdAt    DateTime      @default(now())
+}
+
+enum Role {
+  user
+  ai
 }
