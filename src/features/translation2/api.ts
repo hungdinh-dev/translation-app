@@ -8,15 +8,11 @@ export async function createSessionIfNeeded(userId: string) {
         data: {
             userId,
             title: `New Chat `,
-            // title: `New Chat - ${new Date().toLocaleString()}`,
         },
     })
 
     return session
 }
-
-
-
 
 type ChatMessageInput = {
     sessionId: string
@@ -27,6 +23,7 @@ type ChatMessageInput = {
 }
 
 export async function createChatMessage(data: ChatMessageInput) {
+
     const message = await prisma.chatMessage.create({
         data: {
             sessionId: data.sessionId,
@@ -56,10 +53,16 @@ export async function getChatMessages(sessionId: string) {
 }
 
 export async function getChatSession(userId: string) {
-    const sessions = await prisma.chatSession.findMany({
-        where: { userId },
-        orderBy: { createdAt: 'asc' },
-    })
 
-    return sessions
+    if (userId === undefined) {
+        
+        return []
+    } else {
+
+        const sessions = await prisma.chatSession.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'asc' },
+        })
+        return sessions
+    }
 }

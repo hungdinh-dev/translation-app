@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link';
 import { Command, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -5,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { FiMenu } from "react-icons/fi";
 import { ModeToggle } from './button-change-theme';
+import { signIn, signOut, useSession } from 'next-auth/react'; // Import các hàm cần thiết
 
 //Để thư mục khác sau import cho dễ
 const navigation = [
@@ -16,6 +18,8 @@ const navigation = [
 ];
 
 export default function Header() {
+    const { data: session } = useSession();
+    
     return (
         <header className="bg-white dark:bg-black shadow-sm py-4">
             <div className="container mx-auto px-4 flex items-center justify-between">
@@ -29,7 +33,11 @@ export default function Header() {
                             {item.label}
                         </Link>
                     ))}
-                    <Button variant="outline">Đăng nhập</Button>
+                    {session?.user ? (
+                        <Button variant="outline" onClick={() => signOut()}>Đăng xuất</Button>
+                    ) : (
+                        <Button variant="outline" onClick={() => signIn()}>Đăng nhập</Button>
+                    )}
                     <ModeToggle />
                 </nav>
 
@@ -50,7 +58,11 @@ export default function Header() {
                                         {item.label}
                                     </Link>
                                 ))}
-                                <Button variant="outline" className="w-full">Đăng nhập</Button>
+                                {session?.user ? (
+                                    <Button variant="outline" className="w-full" onClick={() => signOut()}>Đăng xuất</Button>
+                                ) : (
+                                    <Button variant="outline" className="w-full" onClick={() => signIn()}>Đăng nhập</Button>
+                                )}
                             </div>
                         </SheetContent>
                     </Sheet>

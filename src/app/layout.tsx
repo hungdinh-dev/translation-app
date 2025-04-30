@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast'
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/app-header";
 import { RouteChangeIndicator } from "@/components/route-change-indicator";
+import { AuthSessionProvider } from "@/providers/session-provider";
 
 type Props = {
   children: ReactNode;
@@ -15,18 +16,20 @@ export default async function RootLayout({ children, }: Props) {
 
   return (
     <html lang='en' suppressHydrationWarning>
-      <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <RouteChangeIndicator />
-          <Header />
-          {children}
-          <Toaster position="top-right" reverseOrder={false} />
-        </ThemeProvider>
+      <body suppressHydrationWarning>
+        <AuthSessionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <RouteChangeIndicator />
+            <Header />
+            {children}
+            <Toaster position="top-right" reverseOrder={false} />
+          </ThemeProvider>
+        </AuthSessionProvider>
       </body>
     </html>
   );
