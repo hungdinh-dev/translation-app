@@ -9,10 +9,13 @@ import { Card } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
-import { EllipsisVertical } from 'lucide-react'
+import { EllipsisVertical, FolderPen, Trash2 } from 'lucide-react'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { CreateSessionDialog } from '@/features/sessions/create-session-dialog'
 import { useSession } from 'next-auth/react'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { DeleteSessionDialog } from '@/features/sessions/delete-session-dialog'
+import { UpdateSessionDialog } from '@/features/sessions/update-session-dialog'
 
 export default function TranslatePage() {
 
@@ -28,17 +31,19 @@ export default function TranslatePage() {
     const [sessions, setSessions] = useState<any[]>([])
     const [messages, setMessages] = useState<any[]>([])
     const [sessionId, setSessionId] = useState<string>('')
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+    const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
 
     const getListSessions = async () => {
         const sessions = await getChatSession(session?.user?.id)
-        console.log("List Sessions: ", sessions)
+        // console.log("List Sessions: ", sessions)
         setSessions(sessions)
     }
 
     useEffect(() => {
         const initSession = async () => {
             const storedSessionId = sessionStorage.getItem('chatSessionId')
-            console.log("có lưu data không", storedSessionId)
+            // console.log("có lưu data không", storedSessionId)
             if (storedSessionId) {
                 setSessionId(storedSessionId)
                 const existingMessages = await getChatMessages(storedSessionId)
@@ -48,10 +53,12 @@ export default function TranslatePage() {
         initSession()
         getListSessions()
     }, [])
-    
+
     const setNowMessage = async (sessionId: string) => {
         const existingMessages = await getChatMessages(sessionId)
         setMessages(existingMessages)
+        sessionStorage.setItem('chatSessionId', sessionId)
+        setSessionId(sessionId)
     }
 
     const onSubmit = async (data: any) => {
@@ -64,6 +71,8 @@ export default function TranslatePage() {
             content: data.text,
             targetLang
         })
+        
+        form.reset()
 
         setMessages(prev => [...prev, userMessage])
 
@@ -77,11 +86,11 @@ export default function TranslatePage() {
         })
 
         setMessages(prev => [...prev, botMessage])
+
     }
 
-    useEffect(() => {
-        console.log("Xem thay đổi", form)
-    }, [form])
+    console.log("API??????????????", process.env.ELEVENLABS_API_KEY)
+
 
     return (
         <div className="flex max-w-5xl mx-auto p-6 gap-6">
@@ -92,8 +101,9 @@ export default function TranslatePage() {
                     </div>
                     <HoverCard>
                         <HoverCardTrigger asChild>
+                            {/* <Button> */}
                             <CreateSessionDialog userId={session?.user?.id} onSessionCreated={getListSessions} />
-                            {/* <Button><SquarePlus size={10} /></Button> */}
+                            {/* </Button> */}
                         </HoverCardTrigger>
                         <HoverCardContent className="w-fit">
                             <div className="flex justify-between">
@@ -105,10 +115,30 @@ export default function TranslatePage() {
                 <div className="flex flex-col gap-y-2 mt-2">
                     {(sessions || []).map((session, index) => {
                         return (
-                            <Button key={index} onClick={() => setNowMessage(session.id)} className=''>
-                                {session.title}
-                                <div onClick={() => { alert('Hello') }}><EllipsisVertical /></div>
-                            </Button>
+                            <div className='flex justify-between items-center hover:bg-gray-100 hover:text-black rounded-sm hover:cursor-pointer' key={index} onClick={() => setNowMessage(session.id)} >
+                                <div className='ml-4'>
+                                    {session.title}
+                                </div>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="outline"><EllipsisVertical /></Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56">
+                                        <DropdownMenuLabel>Action</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuItem onClick={() => setOpenUpdateDialog(true)}>
+                                                Remane
+                                                <DropdownMenuShortcut><FolderPen /></DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem onClick={() => setOpenDeleteDialog(true)}>
+                                                Delete
+                                                <DropdownMenuShortcut><Trash2 /></DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
                         )
                     })}
                 </div>
@@ -182,8 +212,23 @@ export default function TranslatePage() {
                         </Button>
                     </form>
                 </Form>
-
             </div>
+
+            <DeleteSessionDialog
+                open={openDeleteDialog}
+                onOpenChange={setOpenDeleteDialog}
+                sessionId={sessionId}
+                userId={session?.user?.id}
+                onSessionDeleted={getListSessions}
+            />
+
+            <UpdateSessionDialog
+                open={openUpdateDialog}
+                onOpenChange={setOpenUpdateDialog}
+                sessionId={sessionId}
+                userId={session?.user?.id}
+                onSessionUpdated={getListSessions}
+            />
         </div>
     )
 }

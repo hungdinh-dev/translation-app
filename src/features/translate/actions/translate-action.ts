@@ -1,5 +1,3 @@
-// lib/gemini-api.ts
-
 "use server"
 
 export async function translateTextGemini(prompt: string) {
@@ -29,11 +27,11 @@ export async function translateTextGemini(prompt: string) {
             body: JSON.stringify(payload),
         })
 
-        console.log("BE return response: ", res)
+        // console.log("BE return response: ", res)
 
         const data = await res.json()
 
-        console.log("BE return data: ", data)
+        // console.log("BE return data: ", data)
 
         if (res.ok) {
             const output = data.candidates?.[0]?.content?.parts?.[0]?.text
@@ -48,53 +46,3 @@ export async function translateTextGemini(prompt: string) {
         return "Đã xảy ra lỗi hệ thống."
     }
 }
-
-
-
-// 'use server'
-
-// export async function translateText(inputText: string) {
-//     try {
-//         const apiKey = process.env.OPENAI_API_KEY
-
-//         const response = await fetch('https://api.openai.com/v1/chat/completions', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${apiKey}`,
-//             },
-//             body: JSON.stringify({
-//                 model: 'gpt-3.5-turbo',
-//                 messages: [
-//                     {
-//                         role: 'system',
-//                         content: 'You are a translation assistant. Translate the user input to English.',
-//                     },
-//                     {
-//                         role: 'user',
-//                         content: inputText,
-//                     },
-//                 ],
-//                 temperature: 0.3,
-//             }),
-//         })
-
-//         if (!response.ok) {
-//             const errorData = await response.json();
-//             throw new Error(errorData.error?.message || 'Failed to fetch translation')
-//         }
-
-//         console.log("ChatGPT return response", response)
-
-//         const data = await response.json()
-
-//         console.log("ChatGPT return data", data)
-
-//         const translatedText = data?.choices?.[0]?.message?.content || ''
-
-//         return translatedText
-//     } catch (error: any) {
-//         console.error('Translate error:', error.message)
-//         return `Error: ${error.message}`
-//     }
-// }

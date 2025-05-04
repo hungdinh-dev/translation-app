@@ -1,7 +1,5 @@
 'use client'
 import Link from 'next/link';
-import { Command, CommandGroup, CommandItem } from '@/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { FiMenu } from "react-icons/fi";
@@ -11,10 +9,10 @@ import { signIn, signOut, useSession } from 'next-auth/react'; // Import các h�
 //Để thư mục khác sau import cho dễ
 const navigation = [
     { label: 'Trang chủ', href: '/' },
-    { label: 'Tài Khoản', href: '/users' },
+    // { label: 'Tài Khoản', href: '/users' },
     { label: 'Phiên dịch', href: '/translate' },
-    { label: 'Về chúng tôi', href: '/' },
-    { label: 'Liên hệ', href: '/' },
+    { label: 'Về chúng tôi', href: '/translate-demo' },
+    { label: 'Liên hệ', href: '/contact' },
 ];
 
 export default function Header() {

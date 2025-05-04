@@ -6,66 +6,71 @@ import {
     DialogContent,
     DialogDescription,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger
+    DialogTitle
 } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Loader2, PlusIcon } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { createSession } from "./actions/create-session-action";
 import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { updateSession } from "./actions/update-session-action";
 
-export function CreateSessionDialog({ userId, onSessionCreated }: { userId: string, onSessionCreated?: () => void }) {
+export function UpdateSessionDialog({
+    sessionId,
+    userId,
+    onSessionUpdated,
+    open,
+    onOpenChange
+}
+    :
+    {
+        sessionId: string;
+        userId: string;
+        onSessionUpdated?: () => void;
+        open: boolean,
+        onOpenChange: any;
+    }
+) {
     const form = useForm({
         defaultValues: {
             userId,
-            title: `New Chat `,
+            title: `Update Title `,
         }
     })
 
-    const [open, setOpen] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data: any) => {
-        // console.log("Create Session Data?: ", data)
-        const result = await createSession({
-            userId: userId,
-            title: data.title
-        })
 
-        if (!result.success) {
-            if (result.message === 'This session title already exists.') {
-                toast.error("A session with this title already exists. Please choose another title.")
+        try {
+            // setLoading(true);
+            const res = await updateSession({
+                sessionId: sessionId,
+                userId: userId,
+                title: data.title
+            })
+
+            if (res?.success) {
+                toast.success("Session updated successfully!");
+                onSessionUpdated?.();
             } else {
-                toast.error("Failed to create session. Please try again.")
+                toast.error(res?.error || "Failed to update session.");
             }
-            return
-        }
-
-        if (result.session) {
-            sessionStorage.setItem('chatSessionId', result.session.id)
-        
-            if (onSessionCreated) {
-                onSessionCreated()
-            }
-        
-            toast.success("Create new session success!")
-            setOpen(false)
+        } catch (err) {
+            console.error("Error update session:", err);
+            toast.error("An unexpected error occurred.");
+        } finally {
+            onOpenChange(false)
+            // setLoading(false);
         }
     }
 
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button size="sm">
-                    <PlusIcon />
-                </Button>
-            </DialogTrigger>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Create new session</DialogTitle>
+                    <DialogTitle>Update title</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="flex items-center space-x-2">
@@ -82,10 +87,10 @@ export function CreateSessionDialog({ userId, onSessionCreated }: { userId: stri
                             )} />
 
                             <div className="flex justify-end gap-4">
-                                <Button type="button" variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+                                <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
                                 <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting}>
                                     {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
-                                    Add
+                                    Update
                                     {/* {t('common.confirm-btn')} */}
                                 </Button>
                             </div>
