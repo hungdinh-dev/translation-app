@@ -84,6 +84,7 @@ export default function TranslatePage() {
                 />
             </div>
 
+            {/* w-3/4 flex flex-col gap-4 */}
             <div className="w-3/4 flex flex-col gap-4">
                 <Card className='overflow-y-auto'>
                     <ChatMessages messages={messages} />
