@@ -8,16 +8,16 @@ import { signIn, signOut, useSession } from 'next-auth/react'; // Import các h�
 
 //Để thư mục khác sau import cho dễ
 const navigation = [
-    { label: 'Trang chủ', href: '/' },
+    { label: 'Trang chủ', href: '/en/' },
     // { label: 'Tài Khoản', href: '/users' },
-    { label: 'Phiên dịch', href: '/translate' },
-    { label: 'Về chúng tôi', href: '/translate-demo' },
-    { label: 'Liên hệ', href: '/contact' },
+    { label: 'Phiên dịch', href: '/en/translate' },
+    { label: 'Về chúng tôi', href: '/en/translate-demo' },
+    { label: 'Liên hệ', href: '/en/contact' },
 ];
 
 export default function Header() {
     const { data: session } = useSession();
-    
+
     return (
         <header className="bg-white dark:bg-black shadow-sm py-4">
             <div className="container mx-auto px-4 flex items-center justify-between">

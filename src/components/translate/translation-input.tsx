@@ -47,7 +47,7 @@ export const TranslationInput: React.FC<TranslationInputProps> = ({ onSubmit, is
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select onValueChange={field.onChange} defaultValue={field.value || ''}>
                                     <SelectTrigger className="w-[180px]">
                                         <SelectValue placeholder="Languages" />
                                     </SelectTrigger>

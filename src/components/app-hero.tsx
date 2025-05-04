@@ -3,9 +3,12 @@
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "./ui/button";
 import { Meteors } from "@/components/magicui/meteors";
+import { useTranslation } from "react-i18next";
 
 
 export default function Hero() {
+
+    const { t } = useTranslation();
 
     return (
         <div className="w-full">
@@ -14,7 +17,8 @@ export default function Hero() {
                     <Meteors />
                     <div className="flex flex-col gap-4">
                         <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tight text-center">
-                            This is the start of something new
+                            {/* This is the start of something new */}
+                            {t('home')}
                         </h1>
                         <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
                             Managing a small business today is already tough. Avoid further
