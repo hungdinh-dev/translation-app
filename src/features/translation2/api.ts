@@ -40,14 +40,14 @@ export async function createChatMessage(data: ChatMessageInput) {
 
 export async function getChatMessages(sessionId: string) {
 
-    console.log("BE nhận sessionID: ", sessionId)
+    // console.log("BE nhận sessionID: ", sessionId)
 
     const messages = await prisma.chatMessage.findMany({
         where: { sessionId },
         orderBy: { createdAt: 'asc' },
     })
 
-    console.log("Data backend", messages)
+    // console.log("Data backend", messages)
 
     return messages
 }

@@ -1,17 +1,24 @@
 'use server'
 import { PrismaClient } from "@prisma/client"
-import { z } from "zod"
+import { CreateSessionSchema } from "../schemas/create-session-schema"
 
 const prisma = new PrismaClient()
 
-const createSessionSchema = z.object({
-    userId: z.string().min(1).max(255).trim(),
-    title: z.string().min(1).max(255).trim()
-})
-
-type CreateSessionSchema = z.infer<typeof createSessionSchema>
-
 export async function createSession(data: CreateSessionSchema) {
+
+    const existing = await prisma.chatSession.findFirst({
+        where: {
+            userId: data.userId,
+            title: data.title,
+        },
+    })
+
+    if (existing) {
+        return {
+            success: false,
+            message: 'This session title already exists.'
+        }
+    }
 
     const session = await prisma.chatSession.create({
         data: {
@@ -20,5 +27,8 @@ export async function createSession(data: CreateSessionSchema) {
         },
     })
 
-    return session
+    return {
+        success: true,
+        session,
+    }
 }
