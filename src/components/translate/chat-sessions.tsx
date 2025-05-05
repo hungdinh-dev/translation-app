@@ -25,6 +25,7 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
     const [selectedSessionId, setSelectedSessionId] = useState<string>('');
+    const [selectedSessionTitle, setSelectedSessionTitle] = useState<string>('');
 
     const getListSessions = async () => {
         const sessions = await getChatSession(session?.user?.id);
@@ -44,9 +45,10 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
         setOpenDeleteDialog(true);
     };
 
-    const handleRenameClick = (sessionId: string) => {
+    const handleRenameClick = (sessionId: string, sessionTitle: string) => {
         setSelectedSessionId(sessionId);
         setOpenUpdateDialog(true);
+        setSelectedSessionTitle(sessionTitle)
     };
 
     return (
@@ -84,7 +86,7 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
                                 <DropdownMenuLabel>Action</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem onClick={() => handleRenameClick(session.id)}>
+                                    <DropdownMenuItem onClick={() => handleRenameClick(session.id, session.title)}>
                                         Remane
                                         <DropdownMenuShortcut><FolderPen /></DropdownMenuShortcut>
                                     </DropdownMenuItem>
@@ -111,6 +113,7 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
                 open={openUpdateDialog}
                 onOpenChange={setOpenUpdateDialog}
                 sessionId={selectedSessionId}
+                sessionTitle={selectedSessionTitle}
                 userId={session?.user?.id}
                 onSessionUpdated={getListSessions}
             />

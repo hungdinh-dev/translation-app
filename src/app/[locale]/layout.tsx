@@ -30,7 +30,7 @@ export async function getLanguage() {
 
 export default async function RootLayout({ children, params }: Props) {
 
-  const locale = params.locale;
+  const locale = params?.locale;
   const { t, resources, i18n } = await initTranslations(locale, ["default"]);
 
   return (

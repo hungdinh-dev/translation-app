@@ -7,9 +7,7 @@ import { Card } from '@/components/ui/card'
 import { useSession } from 'next-auth/react'
 import { ChatSessions } from '@/components/translate/chat-sessions'
 import { ChatMessages } from '@/components/translate/chat-messages'
-import { TranslationInput } from '@/components/translate/translation-input'
 import { TranslationInputVoice } from '@/components/translate/translation-input-voice'
-import { ChatMessagesVoice } from '@/components/translate/chat-messages-voice'
 import { speakWithElevenLabs } from '@/utils/elevenlabs'
 
 export default function TranslatePage() {
@@ -91,9 +89,9 @@ export default function TranslatePage() {
                     {/* <ChatMessagesVoice messages={messages} /> */}
                 </Card>
 
-                {/* <TranslationInputVoice onSubmit={handleSendMessage} isSubmitting={isSubmitting} /> */}
+                <TranslationInputVoice onSubmit={handleSendMessage} isSubmitting={isSubmitting} />
 
-                <TranslationInput onSubmit={handleSendMessage} isSubmitting={isSubmitting} />
+                {/* <TranslationInput onSubmit={handleSendMessage} isSubmitting={isSubmitting} /> */}
             </div>
         </div>
     );

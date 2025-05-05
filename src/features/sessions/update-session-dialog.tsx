@@ -14,36 +14,45 @@ import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { updateSession } from "./actions/update-session-action";
+import { useEffect } from "react";
 
 export function UpdateSessionDialog({
     sessionId,
+    sessionTitle,
     userId,
     onSessionUpdated,
     open,
     onOpenChange
-}
-    :
-    {
-        sessionId: string;
-        userId: string;
-        onSessionUpdated?: () => void;
-        open: boolean,
-        onOpenChange: any;
-    }
-) {
+}: {
+    sessionId: string;
+    sessionTitle: string;
+    userId: string;
+    onSessionUpdated?: () => void;
+    open: boolean,
+    onOpenChange: any;
+}) {
     const form = useForm({
         defaultValues: {
             userId,
-            title: `Update Title `,
+            title: sessionTitle,
         }
     })
 
-    // const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        form.reset({
+            userId,
+            title: sessionTitle,
+        });
+    }, [sessionTitle, userId]);
 
     const onSubmit = async (data: any) => {
 
+        if (data.title.trim() === sessionTitle.trim()) {
+            onOpenChange(false)
+            return;
+        }
+
         try {
-            // setLoading(true);
             const res = await updateSession({
                 sessionId: sessionId,
                 userId: userId,
@@ -52,6 +61,7 @@ export function UpdateSessionDialog({
 
             if (res?.success) {
                 toast.success("Session updated successfully!");
+                form.reset()
                 onSessionUpdated?.();
             } else {
                 toast.error(res?.error || "Failed to update session.");
@@ -61,10 +71,8 @@ export function UpdateSessionDialog({
             toast.error("An unexpected error occurred.");
         } finally {
             onOpenChange(false)
-            // setLoading(false);
         }
     }
-
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>

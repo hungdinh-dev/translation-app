@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { createSession } from "./actions/create-session-action";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
+import { title } from "process";
 
 export function CreateSessionDialog({ userId, onSessionCreated }: { userId: string, onSessionCreated?: () => void }) {
     const form = useForm({
@@ -28,7 +29,12 @@ export function CreateSessionDialog({ userId, onSessionCreated }: { userId: stri
     const [open, setOpen] = useState(false);
 
     const onSubmit = async (data: any) => {
-        // console.log("Create Session Data?: ", data)
+
+        if(data.title.trim() === ""){
+            toast.error("Title is required");
+            return
+        }
+
         const result = await createSession({
             userId: userId,
             title: data.title

@@ -84,13 +84,8 @@ export default function TranslatePage() {
             content: translatedText,
             targetLang
         })
-
         setMessages(prev => [...prev, botMessage])
-
     }
-
-    console.log("API??????????????", process.env.ELEVENLABS_API_KEY)
-
 
     return (
         <div className="flex max-w-5xl mx-auto p-6 gap-6">
@@ -226,6 +221,7 @@ export default function TranslatePage() {
                 open={openUpdateDialog}
                 onOpenChange={setOpenUpdateDialog}
                 sessionId={sessionId}
+                sessionTitle={sessionId} //
                 userId={session?.user?.id}
                 onSessionUpdated={getListSessions}
             />
