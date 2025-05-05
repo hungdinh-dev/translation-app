@@ -1,4 +1,4 @@
-import "./globals.css";
+import ".././globals.css";
 import { ReactNode } from "react";
 import { Toaster } from 'react-hot-toast'
 import { ThemeProvider } from "@/components/theme-provider";
@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import "../i18n";
 import TranslationsProvider from "@/i18n/TranslationsProvider";
 import initTranslations from "../i18n";
+import 'aos/dist/aos.css';
 
 const i18nNamespaces = ['default'];
 

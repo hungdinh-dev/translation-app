@@ -37,7 +37,6 @@ export default function TranslatePage() {
 
     const handleSendMessage = async (data: { text: string; targetLang: string }) => {
         if (!sessionId) {
-            // Optionally handle the case where there's no session selected
             console.warn("No chat session selected.");
             return;
         }

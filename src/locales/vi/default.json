@@ -1,4 +1,40 @@
 {
   "home": "Trang chủ",
-  "welcome": "Hello chào"
+  "welcome": "Hello chào",
+  "features": {
+    "title": "Tổng quan trang web",
+    "easy_to_use": {
+      "name": "Dễ dàng sử dụng",
+      "description": "Với giao diện gần gũi, giúp người dùng dễ dàng sử dụng tăng cao trải nghiệm"
+    },
+    "popular_tech": {
+      "name": "Công nghệ phổ biến",
+      "description": "Xây dựng bằng công nghệ hiện đại, dễ bảo trì và mở rộng."
+    },
+    "integrations": {
+      "name": "Tích hợp mạnh mẽ",
+      "description": "Hỗ trợ hơn 100+ tích hợp và đang tiếp tục phát triển."
+    },
+    "smart_management": {
+      "name": "Quản lý thông minh",
+      "description": "Theo dõi tiến trình, sắp xếp công việc và lọc dữ liệu linh hoạt."
+    },
+    "learn_more": "Tìm hiểu thêm"
+  },
+  "hero": {
+    "title": "Dịch ngôn ngữ thông minh bằng AI",
+    "description": "Không còn rào cản ngôn ngữ. Truyền đạt thông điệp của bạn một cách chính xác, nhanh chóng và tự nhiên nhờ sức mạnh của AI.",
+    "cta_chat": "Nhắn tin ngay",
+    "cta_signup": "Đăng ký ngay"
+  },
+  "animate_beam": {
+    "title": "Các công nghệ chính"
+  },
+  "header": {
+    "home": "Trang chủ",
+    "translate": "Phiên dịch",
+    "about_us": "Về chúng tôi"
+  },
+  "login": "Đăng nhập",
+  "signout": "Đăng xuất"
 }

@@ -5,38 +5,43 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { FiMenu } from "react-icons/fi";
 import { ModeToggle } from './button-change-theme';
 import { signIn, signOut, useSession } from 'next-auth/react'; // Import các hàm cần thiết
+import LanguageSwitcher from './language-switcher';
+import { useTranslation } from 'react-i18next';
 
 //Để thư mục khác sau import cho dễ
 const navigation = [
-    { label: 'Trang chủ', href: '/en/' },
+    { label: 'header.home', href: '/en/' },
     // { label: 'Tài Khoản', href: '/users' },
-    { label: 'Phiên dịch', href: '/en/translate' },
-    { label: 'Về chúng tôi', href: '/en/translate-demo' },
-    { label: 'Liên hệ', href: '/en/contact' },
+    { label: 'header.translate', href: '/en/translate-demo' },
+    { label: 'header.about_us', href: '/en' },
 ];
 
 export default function Header() {
+
+    const { t } = useTranslation()
+
     const { data: session } = useSession();
 
     return (
         <header className="bg-white dark:bg-black shadow-sm py-4">
             <div className="container mx-auto px-4 flex items-center justify-between">
-                <Link href="/" className="font-bold text-xl">
-                    My Translate Site
+                <Link href="/en" className="font-bold text-xl">
+                    TWA
                 </Link>
 
                 <nav className="hidden md:flex items-center space-x-4">
                     {navigation.map((item, index) => (
                         <Link key={index} href={item.href} className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500">
-                            {item.label}
+                            {t(item.label)}
                         </Link>
                     ))}
                     {session?.user ? (
-                        <Button variant="outline" onClick={() => signOut()}>Đăng xuất</Button>
+                        <Button variant="outline" onClick={() => signOut()}>{t('signout')}</Button>
                     ) : (
-                        <Button variant="outline" onClick={() => signIn()}>Đăng nhập</Button>
+                        <Button variant="outline" onClick={() => signIn()}>{t('login')}</Button>
                     )}
                     <ModeToggle />
+                    <LanguageSwitcher />
                 </nav>
 
                 <div className="md:hidden">
@@ -57,10 +62,12 @@ export default function Header() {
                                     </Link>
                                 ))}
                                 {session?.user ? (
-                                    <Button variant="outline" className="w-full" onClick={() => signOut()}>Đăng xuất</Button>
+                                    <Button variant="outline" onClick={() => signOut()}>{t('signout')}</Button>
                                 ) : (
-                                    <Button variant="outline" className="w-full" onClick={() => signIn()}>Đăng nhập</Button>
+                                    <Button variant="outline" onClick={() => signIn()}>{t('login')}</Button>
                                 )}
+                                <ModeToggle />
+                                <LanguageSwitcher />
                             </div>
                         </SheetContent>
                     </Sheet>

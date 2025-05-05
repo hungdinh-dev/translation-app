@@ -1,4 +1,40 @@
 {
   "home": "Home",
-  "welcome": "Hello Hello"
+  "welcome": "Hello there",
+  "features": {
+    "title": "About website",
+    "easy_to_use": {
+      "name": "Easy to Use",
+      "description": "With a user-friendly interface, it's easy to navigate and enhances user experience."
+    },
+    "popular_tech": {
+      "name": "Modern Technology",
+      "description": "Built with popular technologies, ensuring scalability and maintainability."
+    },
+    "integrations": {
+      "name": "Powerful Integrations",
+      "description": "Supports over 100 integrations and growing."
+    },
+    "smart_management": {
+      "name": "Smart Management",
+      "description": "Track progress, organize tasks, and filter data effectively."
+    },
+    "learn_more": "Learn more"
+  },
+  "hero": {
+    "title": "Smart Language Translation with AI",
+    "description": "Break language barriers. Communicate clearly, quickly, and naturally with the power of AI.",
+    "cta_chat": "Jump on a chat",
+    "cta_signup": "Sign up now"
+  },
+  "animate_beam": {
+    "title": "Main Tech Stack"
+  },
+  "header": {
+    "home": "Home",
+    "translate": "Translate",
+    "about_us": "About Us"
+  },
+  "login": "Login",
+  "signout": "Sign Out"
 }

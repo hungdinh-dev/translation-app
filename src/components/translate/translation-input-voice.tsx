@@ -24,6 +24,11 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
     const [isListening, setIsListening] = useState(false);
     const recognition = useRef<SpeechRecognition | null>(null);
 
+    const handleSubmit = async (data: { text: string; targetLang: string }) => {
+        form.reset();
+        await onSubmit(data);
+    };
+
     useEffect(() => {
         if ('webkitSpeechRecognition' in window) {
             recognition.current = (new (window as any).webkitSpeechRecognition()) as SpeechRecognition;
@@ -70,7 +75,7 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2 items-end">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-2 items-end">
                 <div className="flex-grow">
                     <FormField
                         control={form.control}
