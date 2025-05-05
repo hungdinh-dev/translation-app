@@ -1,10 +1,10 @@
 "use client"
 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { deleteSession } from "./actions/delete-session-action"; // Đảm bảo path đúng
+import { useTranslation } from "react-i18next";
 
 export function DeleteSessionDialog({
     sessionId,
@@ -21,20 +21,22 @@ export function DeleteSessionDialog({
 }) {
     const [loading, setLoading] = useState(false);
 
+    const { t } = useTranslation()
+
     const handleDelete = async () => {
         try {
             setLoading(true);
             const res = await deleteSession({ sessionId, userId });
 
             if (res?.success) {
-                toast.success("Session deleted successfully!");
+                toast.success(t('chat_session.delete_dialog.toast_success'));
                 onSessionDeleted?.();
             } else {
-                toast.error(res?.error || "Failed to delete session.");
+                toast.error(res?.error || t('chat_session.delete_dialog.toast_error'));
             }
         } catch (err) {
-            console.error("Error deleting session:", err);
-            toast.error("An unexpected error occurred.");
+            // console.error("Error deleting session:", err);
+            toast.error(t('chat_session.delete_dialog.toast_error_unexpect'));
         } finally {
             setLoading(false);
         }
@@ -44,18 +46,18 @@ export function DeleteSessionDialog({
         <AlertDialog open={open} onOpenChange={onOpenChange}>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogTitle>{t('chat_session.delete_dialog.dialog_title')}</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete the chat session and all its messages.
+                        {t('chat_session.delete_dialog.dialog_desc')}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel disabled={loading}>{t('chat_session.delete_dialog.dialog_btn_cancel')}</AlertDialogCancel>
                     <AlertDialogAction
                         disabled={loading}
                         onClick={handleDelete}
                     >
-                        {loading ? "Deleting..." : "Delete"}
+                        {loading ? t('chat_session.delete_dialog.dialog_btn_deleting') : t('chat_session.delete_dialog.dialog_btn_delete')}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

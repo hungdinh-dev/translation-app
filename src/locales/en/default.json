@@ -36,5 +36,52 @@
     "about_us": "About Us"
   },
   "login": "Login",
-  "signout": "Sign Out"
+  "signout": "Sign Out",
+  "chat_session": {
+    "title": "Chat Session",
+    "new_session": "New Session",
+    "action": "Action",
+    "rename": "Rename",
+    "delete": "Delete",
+    "delete_dialog": {
+      "toast_success": "Session deleted successfully!",
+      "toast_error": "Failed to delete session.",
+      "toast_error_unexpect": "An unexpected error occurred.",
+      "dialog_title": "Are you absolutely sure?",
+      "dialog_desc": "This action cannot be undone. This will permanently delete the chat session and all its messages.",
+      "dialog_btn_cancel": "Cancel",
+      "dialog_btn_delete": "Delete",
+      "dialog_btn_deleting": "Deleting..."
+    },
+    "create_dialog": {
+      "toast_success": "Create new session success!",
+      "toast_error_title": "Title is required",
+      "toast_error_exits": "A session with this title already exists. Please choose another title.",
+      "toast_error_unexpect": "Failed to create session. Please try again.",
+      "dialog_title": "Create new session",
+      "dialog_input_title": "Input Title",
+      "dialog_btn_cancel": "Cancel",
+      "dialog_btn_add": "Add"
+    },
+    "update_dialog": {
+      "toast_success": "Session updated successfully!",
+      "toast_error_exits": "A session with this title already exists. Please choose another title.",
+      "toast_error_unexpect": "Failed to update session. Please try again.",
+      "dialog_title": "Update title",
+      "dialog_input_title": "Input Title",
+      "dialog_btn_cancel": "Cancel",
+      "dialog_btn_update": "Update"
+    }
+  },
+  "translate": {
+    "rule": "Please input content to translate!",
+    "placeholder": "Enter text to translate...",
+    "choose_target_language": "Please choose language to translate",
+    "eng": "English",
+    "vi": "Vietnamese",
+    "jp": "Japanese",
+    "cn": "Chinese",
+    "btn_translating": "Translating...",
+    "btn_send": "Send"
+  }
 }

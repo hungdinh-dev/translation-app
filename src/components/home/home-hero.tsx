@@ -4,7 +4,7 @@ import { MessageCircleMore, MoveRight, PhoneCall } from "lucide-react";
 import { Meteors } from "@/components/magicui/meteors";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Hero() {
@@ -27,13 +27,13 @@ export default function Hero() {
                         <div className="flex justify-center items-center flex-row gap-3">
                             {session
                                 ?
-                                <Link href={'/en/translate-demo'}>
+                                <Link href={'/en/translate-page'}>
                                     <Button size="lg" className="gap-4" variant="outline">
                                         {t('hero.cta_chat')} <MessageCircleMore className="w-4 h-4" />
                                     </Button>
                                 </Link>
                                 :
-                                <Button size="lg" className="gap-4">
+                                <Button size="lg" className="gap-4" onClick={() => signIn()}>
                                     {t('hero.cta_signup')} <MoveRight className="w-4 h-4" />
                                 </Button>
                             }

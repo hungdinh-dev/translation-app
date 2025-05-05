@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { FiMenu } from "react-icons/fi";
 import { ModeToggle } from './button-change-theme';
-import { signIn, signOut, useSession } from 'next-auth/react'; // Import các hàm cần thiết
+import { signIn, signOut, useSession } from 'next-auth/react';
 import LanguageSwitcher from './language-switcher';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 const navigation = [
     { label: 'header.home', href: '/en/' },
     // { label: 'Tài Khoản', href: '/users' },
-    { label: 'header.translate', href: '/en/translate-demo' },
+    { label: 'header.translate', href: '/en/translate-page' },
     { label: 'header.about_us', href: '/en' },
 ];
 

@@ -36,5 +36,52 @@
     "about_us": "Về chúng tôi"
   },
   "login": "Đăng nhập",
-  "signout": "Đăng xuất"
+  "signout": "Đăng xuất",
+  "chat_session": {
+    "title": "Phiên trò chuyện",
+    "new_session": "Tạo mới phiên trò truyện",
+    "action": "Hành động",
+    "rename": "Đổi tên",
+    "delete": "Xóa",
+    "delete_dialog": {
+      "toast_success": "Xóa đoạn chat thành công!",
+      "toast_error": "Xóa đoạn chat thất bại!",
+      "toast_error_unexpect": "Có lỗi xảy ra!",
+      "dialog_title": "Bạn có chắc chắn muốn xóa không?",
+      "dialog_desc": "Hành động này không thể sửa lại, đoạn chat này và tất cả tin nhắn sẽ bị xóa.",
+      "dialog_btn_cancel": "Hủy",
+      "dialog_btn_delete": "Xóa",
+      "dialog_btn_deleting": "Đang xóa..."
+    },
+    "create_dialog": {
+      "toast_success": "Tạo mới đoạn chat thành công!",
+      "toast_error_title": "Vui lòng nhập tiêu đề!",
+      "toast_error_exits": "Đoạn chat với tiêu đề này đã tồn tại. Vui lòng nhập tiêu đề khác.",
+      "toast_error_unexpect": "Tạo đoạn chat thất bại, vui lòng thử lại.",
+      "dialog_title": "Tạo mới đoạn chat",
+      "dialog_input_title": "Nhập tiêu đề",
+      "dialog_btn_cancel": "Hủy",
+      "dialog_btn_add": "Tạo"
+    },
+    "update_dialog": {
+      "toast_success": "Cập nhật phiên chat thành công!",
+      "toast_error_exits": "Đoạn chat với tiêu đề này đã tồn tại. Vui lòng nhập tiêu đề khác.",
+      "toast_error_unexpect": "Cập nhật đoạn chat thất bại, vui lòng thử lại.",
+      "dialog_title": "Cập nhật tiêu đề đoạn chat",
+      "dialog_input_title": "Nhập tiêu đề",
+      "dialog_btn_cancel": "Hủy",
+      "dialog_btn_update": "Cập nhật"
+    }
+  },
+  "translate": {
+    "rule": "Vui lòng nhập văn bản bạn muốn dịch.",
+    "placeholder": "Nhập văn bản cần dịch",
+    "choose_target_language": "Vui lòng chọn ngôn ngữ bạn muốn dịch!",
+    "eng": "Tiếng Anh",
+    "vi": "Tiếng Việt",
+    "jp": "Tiếng Nhật",
+    "cn": "Tiếng Trung",
+    "btn_translating": "Đang dịch...",
+    "btn_send": "Gửi"
+  }
 }

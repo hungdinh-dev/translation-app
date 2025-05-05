@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Mic } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 interface TranslationInputProps {
     onSubmit: (data: { text: string; targetLang: string }) => void;
@@ -20,6 +21,8 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
             targetLang: 'English',
         }
     });
+
+    const { t } = useTranslation()
 
     const [isListening, setIsListening] = useState(false);
     const recognition = useRef<SpeechRecognition | null>(null);
@@ -73,6 +76,17 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
         recognition.current.start();
     };
 
+
+    //Fix bug F5 page ======================================
+    const [hasMounted, setHasMounted] = useState(false);
+
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
+
+    if (!hasMounted) return null;
+    //======================================
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-2 items-end">
@@ -80,12 +94,12 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
                     <FormField
                         control={form.control}
                         name="text"
-                        rules={{ required: 'Vui lòng nhập nội dung cần dịch' }}
+                        rules={{ required: t('translate.placeholder') }}
                         render={({ field }) => (
                             <FormItem className="w-full relative">
                                 <FormControl>
                                     <Textarea
-                                        placeholder="Enter text to translate..."
+                                        placeholder={t('translate.placeholder')}
                                         className="border p-2 rounded w-full h-20 pr-10"
                                         {...field}
                                     />
@@ -106,7 +120,7 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
                 <FormField
                     control={form.control}
                     name="targetLang"
-                    rules={{ required: 'Vui lòng chọn ngôn ngữ đích.' }}
+                    rules={{ required: t('translate.choose_target_language') }}
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
@@ -115,10 +129,10 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
                                         <SelectValue placeholder="Languages" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="English">English</SelectItem>
-                                        <SelectItem value="Vietnamese">Vietnamese</SelectItem>
-                                        <SelectItem value="Japanese">Japanese</SelectItem>
-                                        <SelectItem value="Chinese">Chinese</SelectItem>
+                                        <SelectItem value="English">{t('translate.eng')}</SelectItem>
+                                        <SelectItem value="Vietnamese">{t('translate.vi')}</SelectItem>
+                                        <SelectItem value="Japanese">{t('translate.jp')}</SelectItem>
+                                        <SelectItem value="Chinese">{t('translate.cn')}</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
@@ -131,7 +145,7 @@ export const TranslationInputVoice: React.FC<TranslationInputProps> = ({ onSubmi
                     type="submit"
                     disabled={isSubmitting || isListening}
                 >
-                    {isSubmitting ? 'Translating...' : 'Send'}
+                    {isSubmitting ? t('translate.btn_translating') : t('translate.btn_send')}
                 </Button>
             </form>
         </Form>

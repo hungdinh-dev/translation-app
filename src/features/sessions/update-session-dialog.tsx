@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { updateSession } from "./actions/update-session-action";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export function UpdateSessionDialog({
     sessionId,
@@ -31,6 +32,8 @@ export function UpdateSessionDialog({
     open: boolean,
     onOpenChange: any;
 }) {
+    const { t } = useTranslation()
+
     const form = useForm({
         defaultValues: {
             userId,
@@ -60,15 +63,16 @@ export function UpdateSessionDialog({
             })
 
             if (res?.success) {
-                toast.success("Session updated successfully!");
+                toast.success(t("chat_session.update_dialog.toast_success"));
                 form.reset()
                 onSessionUpdated?.();
             } else {
-                toast.error(res?.error || "Failed to update session.");
+                // toast.error(res?.error || "Failed to update session.");
+                toast.error(t("chat_session.update_dialog.toast_error_exits"));
             }
         } catch (err) {
             console.error("Error update session:", err);
-            toast.error("An unexpected error occurred.");
+            toast.error(t("chat_session.update_dialog.toast_error_unexpect"));
         } finally {
             onOpenChange(false)
         }
@@ -78,7 +82,7 @@ export function UpdateSessionDialog({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Update title</DialogTitle>
+                    <DialogTitle>{t("chat_session.update_dialog.dialog_title")}</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="flex items-center space-x-2">
@@ -86,20 +90,19 @@ export function UpdateSessionDialog({
                         <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-4">
                             <FormField control={form.control} name="title" render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Input Title</FormLabel>
+                                    <FormLabel>{t("chat_session.update_dialog.dialog_input_title")}</FormLabel>
                                     <FormControl>
-                                        <Input placeholder={'Input Title'} {...field} />
+                                        <Input placeholder={t("chat_session.update_dialog.dialog_input_title")} {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )} />
 
                             <div className="flex justify-end gap-4">
-                                <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
+                                <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>{t("chat_session.update_dialog.dialog_btn_cancel")}</Button>
                                 <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting}>
                                     {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
-                                    Update
-                                    {/* {t('common.confirm-btn')} */}
+                                    {t("chat_session.update_dialog.dialog_btn_update")}
                                 </Button>
                             </div>
                         </form>

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { DeleteSessionDialog } from '@/features/sessions/delete-session-dialog'
 import { UpdateSessionDialog } from '@/features/sessions/update-session-dialog'
+import { useTranslation } from 'react-i18next'
 
 interface ChatSessionsProps {
     onSessionSelect: (sessionId: string) => void;
@@ -26,6 +27,8 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
     const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
     const [selectedSessionId, setSelectedSessionId] = useState<string>('');
     const [selectedSessionTitle, setSelectedSessionTitle] = useState<string>('');
+
+    const { t } = useTranslation();
 
     const getListSessions = async () => {
         const sessions = await getChatSession(session?.user?.id);
@@ -55,7 +58,7 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
         <div>
             <div className='flex items-center justify-between'>
                 <div className="text-lg font-semibold mb-2">
-                    Chat Sessions
+                    {t('chat_session.title')}
                 </div>
                 <HoverCard>
                     <HoverCardTrigger asChild>
@@ -63,7 +66,7 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
                     </HoverCardTrigger>
                     <HoverCardContent className="w-fit">
                         <div className="flex justify-between">
-                            <h4 className="text-sm font-semibold">New Session</h4>
+                            <h4 className="text-sm font-semibold">{t('chat_session.new_session')}</h4>
                         </div>
                     </HoverCardContent>
                 </HoverCard>
@@ -82,16 +85,16 @@ export const ChatSessions: React.FC<ChatSessionsProps> = ({ onSessionSelect, onS
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline"><EllipsisVertical /></Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56">
-                                <DropdownMenuLabel>Action</DropdownMenuLabel>
+                            <DropdownMenuContent className="w-40">
+                                <DropdownMenuLabel>{t('chat_session.action')}</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem onClick={() => handleRenameClick(session.id, session.title)}>
-                                        Remane
+                                        {t('chat_session.rename')}
                                         <DropdownMenuShortcut><FolderPen /></DropdownMenuShortcut>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => handleDeleteClick(session.id)}>
-                                        Delete
+                                        {t('chat_session.delete')}
                                         <DropdownMenuShortcut><Trash2 /></DropdownMenuShortcut>
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>

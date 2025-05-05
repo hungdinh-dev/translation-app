@@ -3,7 +3,7 @@ export const speakWithElevenLabs = async (text: string) => {
   const apiKey = 'sk_8b541d5d8469966596ad59892830d79cd5cf6380535fa586';
   const voiceId = '21m00Tcm4TlvDq8ikWAM';
 
-  console.log("Có API Key không?: ", apiKey2)
+  // console.log("Có API Key không?: ", apiKey2)
 
   console.log("Có API Key không?: ", apiKey)
 

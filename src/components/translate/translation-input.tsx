@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { useTranslation } from 'react-i18next'
 
 interface TranslationInputProps {
     onSubmit: (data: { text: string; targetLang: string }) => void;
@@ -19,18 +20,20 @@ export const TranslationInput: React.FC<TranslationInputProps> = ({ onSubmit, is
         }
     });
 
+    const { t } = useTranslation()
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2 items-end">
                 <FormField
                     control={form.control}
                     name="text"
-                    rules={{ required: 'Vui lòng nhập nội dung cần dịch' }}
+                    rules={{ required: t('translate.placeholder')}}
                     render={({ field }) => (
                         <FormItem className="w-full">
                             <FormControl>
                                 <Textarea
-                                    placeholder="Enter text to translate..."
+                                    placeholder={t('translate.placeholder')}
                                     className="border p-2 rounded w-full h-20"
                                     {...field}
                                 />
@@ -43,7 +46,7 @@ export const TranslationInput: React.FC<TranslationInputProps> = ({ onSubmit, is
                 <FormField
                     control={form.control}
                     name="targetLang"
-                    rules={{ required: 'Vui lòng chọn ngôn ngữ đích.' }}
+                    rules={{ required: t('translate.choose_target_language')}}
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
@@ -52,10 +55,10 @@ export const TranslationInput: React.FC<TranslationInputProps> = ({ onSubmit, is
                                         <SelectValue placeholder="Languages" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="English">English</SelectItem>
-                                        <SelectItem value="Vietnamese">Vietnamese</SelectItem>
-                                        <SelectItem value="Japanese">Japanese</SelectItem>
-                                        <SelectItem value="Chinese">Chinese</SelectItem>
+                                        <SelectItem value="English">{t('translate.eng')}</SelectItem>
+                                        <SelectItem value="Vietnamese">{t('translate.vi')}</SelectItem>
+                                        <SelectItem value="Japanese">{t('translate.jp')}</SelectItem>
+                                        <SelectItem value="Chinese">{t('translate.cn')}</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
@@ -68,7 +71,7 @@ export const TranslationInput: React.FC<TranslationInputProps> = ({ onSubmit, is
                     type="submit"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? 'Translating...' : 'Send'}
+                    {isSubmitting ? t('translate.btn_translating') : t('translate.btn_send')}
                 </Button>
             </form>
         </Form>

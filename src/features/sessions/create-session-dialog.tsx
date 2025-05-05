@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { createSession } from "./actions/create-session-action";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
-import { title } from "process";
+import { useTranslation } from "react-i18next";
 
 export function CreateSessionDialog({ userId, onSessionCreated }: { userId: string, onSessionCreated?: () => void }) {
     const form = useForm({
@@ -26,12 +26,14 @@ export function CreateSessionDialog({ userId, onSessionCreated }: { userId: stri
         }
     })
 
+    const { t } = useTranslation()
+
     const [open, setOpen] = useState(false);
 
     const onSubmit = async (data: any) => {
 
-        if(data.title.trim() === ""){
-            toast.error("Title is required");
+        if (data.title.trim() === "") {
+            toast.error(t("chat_session.create_dialog.toast_error_title"));
             return
         }
 
@@ -42,21 +44,21 @@ export function CreateSessionDialog({ userId, onSessionCreated }: { userId: stri
 
         if (!result.success) {
             if (result.message === 'This session title already exists.') {
-                toast.error("A session with this title already exists. Please choose another title.")
+                toast.error(t("chat_session.create_dialog.toast_error_exits"))
             } else {
-                toast.error("Failed to create session. Please try again.")
+                toast.error(t("chat_session.create_dialog.toast_error_unexpect"))
             }
             return
         }
 
         if (result.session) {
             sessionStorage.setItem('chatSessionId', result.session.id)
-        
+
             if (onSessionCreated) {
                 onSessionCreated()
             }
-        
-            toast.success("Create new session success!")
+
+            toast.success(t("chat_session.create_dialog.toast_success"))
             setOpen(false)
         }
     }
@@ -71,7 +73,7 @@ export function CreateSessionDialog({ userId, onSessionCreated }: { userId: stri
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Create new session</DialogTitle>
+                    <DialogTitle>{t("chat_session.create_dialog.dialog_title")}</DialogTitle>
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="flex items-center space-x-2">
@@ -79,20 +81,19 @@ export function CreateSessionDialog({ userId, onSessionCreated }: { userId: stri
                         <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-4">
                             <FormField control={form.control} name="title" render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Input Title</FormLabel>
+                                    <FormLabel>{t("chat_session.create_dialog.dialog_input_title")}</FormLabel>
                                     <FormControl>
-                                        <Input placeholder={'Input Title'} {...field} />
+                                        <Input placeholder={t("chat_session.create_dialog.dialog_input_title")} {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )} />
 
                             <div className="flex justify-end gap-4">
-                                <Button type="button" variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+                                <Button type="button" variant="ghost" onClick={() => setOpen(false)}>{t("chat_session.create_dialog.dialog_btn_cancel")}</Button>
                                 <Button type="submit" disabled={!form.formState.isValid || form.formState.isSubmitting}>
                                     {form.formState.isSubmitting && <Loader2 className="animate-spin" />}
-                                    Add
-                                    {/* {t('common.confirm-btn')} */}
+                                    {t("chat_session.create_dialog.dialog_btn_add")}
                                 </Button>
                             </div>
                         </form>

@@ -74,9 +74,9 @@ export default function TranslatePage() {
             <div className="w-1/4 border-r pr-4">
                 <ChatSessions
                     onSessionSelect={handleSessionSelect}
-                    onSessionCreated={() => { /* Re-fetch sessions in parent if needed */ }}
-                    onSessionDeleted={() => { /* Re-fetch sessions in parent if needed */ }}
-                    onSessionUpdated={() => { /* Re-fetch sessions in parent if needed */ }}
+                    onSessionCreated={() => { }}
+                    onSessionDeleted={() => { }}
+                    onSessionUpdated={() => { }}
                     currentSessionId={sessionId}
                 />
             </div>

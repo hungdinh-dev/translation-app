@@ -10,7 +10,7 @@ export async function updateSession(data: UpdateSessionSchema) {
         const existingTitle = await prisma.chatSession.findFirst({
             where: {
                 title: data.title,
-                id: data.sessionId,
+                // id: data.sessionId,
             },
         });
 
@@ -30,8 +30,8 @@ export async function updateSession(data: UpdateSessionSchema) {
 
         return { success: true };
     } catch (error) {
-        console.log("Update session error: ", error)
-        return { success: false, error: "Failed to update session. " }
+        // console.log("Update session error: ", error)
+        return { success: false, error: error }
     }
 
 }
