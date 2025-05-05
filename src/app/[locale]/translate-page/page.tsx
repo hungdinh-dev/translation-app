@@ -2,19 +2,33 @@
 
 import { useState, useEffect } from 'react'
 import { translateTextGemini } from '@/features/translate/actions/translate-action'
-import { createChatMessage, getChatMessages } from '@/features/translation2/api'
+// import { createChatMessage, getChatMessages } from '@/features/translation2/api'
 import { Card } from '@/components/ui/card'
 import { useSession } from 'next-auth/react'
 import { ChatSessions } from '@/components/translate/chat-sessions'
 import { ChatMessages } from '@/components/translate/chat-messages'
 import { TranslationInputVoice } from '@/components/translate/translation-input-voice'
 import { speakWithElevenLabs } from '@/utils/elevenlabs'
+import { useRouter } from 'next/navigation'
+import { getChatMessages } from '@/features/chat-message/actions/get-chat-message-action'
+import { createChatMessage } from '@/features/chat-message/actions/create-chat-message-action'
 
 export default function TranslatePage() {
-    const { data: session } = useSession();
+    const { data: session , status } = useSession();
+    const router = useRouter();
+
     const [messages, setMessages] = useState<any[]>([]);
     const [sessionId, setSessionId] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push('/api/auth/signin');
+        }
+
+        console.log("Status? ",status)
+    }, [status, router]);
+
 
     useEffect(() => {
         const initSession = async () => {

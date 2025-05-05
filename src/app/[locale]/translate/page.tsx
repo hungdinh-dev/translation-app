@@ -16,10 +16,12 @@ import { useSession } from 'next-auth/react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { DeleteSessionDialog } from '@/features/sessions/delete-session-dialog'
 import { UpdateSessionDialog } from '@/features/sessions/update-session-dialog'
+import { useRouter } from 'next/navigation'
 
 export default function TranslatePage() {
 
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
     const form = useForm({
         defaultValues: {
@@ -39,6 +41,14 @@ export default function TranslatePage() {
         // console.log("List Sessions: ", sessions)
         setSessions(sessions)
     }
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push('/api/auth/signin');
+        }
+
+        console.log("Status? ",status)
+    }, [status, router]);
 
     useEffect(() => {
         const initSession = async () => {
@@ -71,7 +81,7 @@ export default function TranslatePage() {
             content: data.text,
             targetLang
         })
-        
+
         form.reset()
 
         setMessages(prev => [...prev, userMessage])

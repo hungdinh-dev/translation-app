@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getChatSession } from '@/features/translation2/api'
+// import { getChatSession } from '@/features/translation2/api'
 import { CreateSessionDialog } from '@/features/sessions/create-session-dialog'
 import { useSession } from 'next-auth/react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -11,6 +11,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { DeleteSessionDialog } from '@/features/sessions/delete-session-dialog'
 import { UpdateSessionDialog } from '@/features/sessions/update-session-dialog'
 import { useTranslation } from 'react-i18next'
+import { getChatSession } from '@/features/chat-message/actions/get-chat-message-action'
 
 interface ChatSessionsProps {
     onSessionSelect: (sessionId: string) => void;

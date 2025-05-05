@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import Typewriter from 'typewriter-effect'
 
 export default function Hero() {
     const { t } = useTranslation();
@@ -19,7 +20,13 @@ export default function Hero() {
                     <Meteors />
                     <div className="flex flex-col gap-4">
                         <h1 className="font-bold text-5xl md:text-7xl max-w-2xl tracking-tight text-center">
-                            {t('hero.title')}
+                            <Typewriter
+                                options={{
+                                    strings: [t('hero.eng_title'), t('hero.vi_title'), t('hero.jp_title'), t('hero.cn_title')],
+                                    autoStart: true,
+                                    loop: true,
+                                }}
+                            />
                         </h1>
                         <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
                             {t('hero.description')}

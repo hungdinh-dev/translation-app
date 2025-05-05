@@ -13,7 +13,6 @@ const HomeH1 = ({ text }: { text: string }) => {
         });
     }, []);
 
-
     return (
         <div className="text-5xl font-bold text-center mb-10"
             data-aos="fade-down"

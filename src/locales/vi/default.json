@@ -22,6 +22,10 @@
     "learn_more": "Tìm hiểu thêm"
   },
   "hero": {
+    "eng_title": "Ứng dụng dịch ngôn ngữ thông minh với AI",
+    "vi_title": "Smart Language Translation with AI",
+    "jp_title": "AIによるスマートな言語翻訳",
+    "cn_title": "人工智能语言翻译",
     "title": "Dịch ngôn ngữ thông minh bằng AI",
     "description": "Không còn rào cản ngôn ngữ. Truyền đạt thông điệp của bạn một cách chính xác, nhanh chóng và tự nhiên nhờ sức mạnh của AI.",
     "cta_chat": "Nhắn tin ngay",

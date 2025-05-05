@@ -22,6 +22,10 @@
     "learn_more": "Learn more"
   },
   "hero": {
+    "eng_title": "Smart Language Translation with AI",
+    "vi_title": "Ứng dụng dịch ngôn ngữ thông minh với AI",
+    "jp_title": "AIによるスマートな言語翻訳",
+    "cn_title": "人工智能语言翻译",
     "title": "Smart Language Translation with AI",
     "description": "Break language barriers. Communicate clearly, quickly, and naturally with the power of AI.",
     "cta_chat": "Jump on a chat",

@@ -8,11 +8,8 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import LanguageSwitcher from './language-switcher';
 import { useTranslation } from 'react-i18next';
 
-//Để thư mục khác sau import cho dễ
 const navigation = [
     { label: 'header.home', href: '/en/' },
-    // { label: 'Tài Khoản', href: '/users' },
-    { label: 'header.translate', href: '/en/translate-page' },
     { label: 'header.about_us', href: '/en' },
 ];
 
@@ -36,7 +33,12 @@ export default function Header() {
                         </Link>
                     ))}
                     {session?.user ? (
-                        <Button variant="outline" onClick={() => signOut()}>{t('signout')}</Button>
+                        <div>
+                            <Link href='/en/translate-page' className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500 mr-10">
+                                {t("header.translate")}
+                            </Link>
+                            <Button variant="outline" onClick={() => signOut()}>{t('signout')}</Button>
+                        </div>
                     ) : (
                         <Button variant="outline" onClick={() => signIn()}>{t('login')}</Button>
                     )}
@@ -55,19 +57,26 @@ export default function Header() {
                             <SheetHeader>
                                 <SheetTitle>Menu</SheetTitle>
                             </SheetHeader>
-                            <div className="grid gap-4 py-4">
+                            <div className="grid gap-4 p-4">
                                 {navigation.map((item) => (
-                                    <Link key={item.href} href={item.href} className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500 block py-2">
-                                        {item.label}
+                                    <Link key={item.href} href={item.href} className="text-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500 block py-2">
+                                        {t(item.label)}
                                     </Link>
                                 ))}
                                 {session?.user ? (
-                                    <Button variant="outline" onClick={() => signOut()}>{t('signout')}</Button>
+                                    <div>
+                                        <Link href='/en/translate-page' className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500">
+                                            {t("header.translate")}
+                                        </Link>
+                                        <Button variant="outline" onClick={() => signOut()}>{t('signout')}</Button>
+                                    </div>
                                 ) : (
                                     <Button variant="outline" onClick={() => signIn()}>{t('login')}</Button>
                                 )}
-                                <ModeToggle />
-                                <LanguageSwitcher />
+                                <div className='flex items-center justify-center gap-x-10'>
+                                    <ModeToggle />
+                                    <LanguageSwitcher />
+                                </div>
                             </div>
                         </SheetContent>
                     </Sheet>
