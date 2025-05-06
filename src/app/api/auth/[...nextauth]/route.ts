@@ -1,5 +1,6 @@
 // src/app/api/auth/[...nextauth]/route.js
-import NextAuth from "next-auth";
+// import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -8,17 +9,21 @@ import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
-export const authOptions = {
+export const authOptions : NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
     CredentialsProvider({
       name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
       async authorize(credentials) {
-        const { email, password } = credentials;
+        const { email, password } = credentials as Record<"email" | "password", string>;
 
         const user = await prisma.authProvider.findUnique({
           where: {
@@ -63,7 +68,7 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
-        session.user.image = token.image;
+        session.user.image = token.image as string | null | undefined;
       }
       return session;
     },
