@@ -34,8 +34,8 @@ model User {
   sessions      ChatSession[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  accounts      Account[]    // Trường này định nghĩa mối quan hệ ngược lại với model Account
-  sessionsRel   Session[]    // Thêm trường này cho quan hệ ngược lại với model Session
+  accounts      Account[]    
+  sessionsRel   Session[]    
 }
 
 model Account {
@@ -81,9 +81,9 @@ model AuthProvider {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   userId       String   @db.ObjectId
   user         User     @relation(fields: [userId], references: [id])
-  provider     String   // 'credentials' | 'google'
-  providerId   String   // Với credentials là email, với google là sub
-  passwordHash String?  // Chỉ dùng khi provider = 'credentials'
+  provider     String   
+  providerId   String   
+  passwordHash String?  
   createdAt    DateTime @default(now())
 
   @@unique([provider, providerId])
@@ -103,7 +103,7 @@ model ChatMessage {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   sessionId  String      @db.ObjectId
   session    ChatSession @relation(fields: [sessionId], references: [id])
-  role       Role        // 'user' | 'ai'
+  role       Role        
   content    String
   sourceLang String?
   targetLang String?
