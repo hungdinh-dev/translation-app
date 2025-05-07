@@ -7,17 +7,28 @@ import { ModeToggle } from './button-change-theme';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import LanguageSwitcher from './language-switcher';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 
 const navigation = [
     { label: 'header.home', href: '/en/' },
-    { label: 'header.about_us', href: '/en' },
+    { label: 'header.about_us', href: '/en/about' },
 ];
 
 export default function Header() {
 
+    const router = useRouter()
+
     const { t } = useTranslation()
 
     const { data: session } = useSession();
+
+    const handleSignOut = async () => {
+        sessionStorage.removeItem('chatSessionId')
+
+        await signOut({ redirect: false })
+
+        router.push('/en')
+    }
 
     return (
         <header className="bg-white dark:bg-black shadow-sm py-4">
@@ -34,10 +45,13 @@ export default function Header() {
                     ))}
                     {session?.user ? (
                         <div>
+                            <Link href='/en/dictionary' className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500 mr-4">
+                                {t("header.dictionary")}
+                            </Link>
                             <Link href='/en/translate-page' className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-500 mr-10">
                                 {t("header.translate")}
                             </Link>
-                            <Button variant="outline" onClick={() => signOut()}>{t('signout')}</Button>
+                            <Button variant="outline" onClick={() => handleSignOut()}>{t('signout')}</Button>
                         </div>
                     ) : (
                         <Button variant="outline" onClick={() => signIn()}>{t('login')}</Button>

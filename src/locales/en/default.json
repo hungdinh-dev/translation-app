@@ -37,7 +37,8 @@
   "header": {
     "home": "Home",
     "translate": "Translate",
-    "about_us": "About Us"
+    "about_us": "About",
+    "dictionary": "Dictionary"
   },
   "login": "Login",
   "signout": "Sign Out",

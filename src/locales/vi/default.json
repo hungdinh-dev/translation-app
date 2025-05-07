@@ -37,7 +37,8 @@
   "header": {
     "home": "Trang chủ",
     "translate": "Phiên dịch",
-    "about_us": "Về chúng tôi"
+    "about_us": "Về chúng tôi",
+    "dictionary": "Từ điển"
   },
   "login": "Đăng nhập",
   "signout": "Đăng xuất",
